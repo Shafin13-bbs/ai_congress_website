@@ -162,7 +162,21 @@ async function loadSymptoms(){
 
 function showAuth(){ $("authView").classList.remove("hidden");$("appView").classList.add("hidden");$("logoutBtn").classList.add("hidden");$("whoami").textContent=""; }
 function showApp(){ $("authView").classList.add("hidden");$("appView").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");$("whoami").textContent=user?.display_name||user?.email||""; }
+$("showLogin").onclick = () => {
+  authMode = "login";
+  $("showLogin").classList.add("active");
+  $("showRegister").classList.remove("active");
+  $("nameField").classList.add("hidden");
+  $("authSubmit").textContent = "Sign in securely";
+};
 
+$("showRegister").onclick = () => {
+  authMode = "register";
+  $("showRegister").classList.add("active");
+  $("showLogin").classList.remove("active");
+  $("nameField").classList.remove("hidden");
+  $("authSubmit").textContent = "Create account";
+};
 $("authForm").onsubmit=async e=>{
   e.preventDefault(); msg("authMsg","Working…");
   try{
