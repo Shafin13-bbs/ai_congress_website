@@ -4,6 +4,7 @@ python-multipart>=0.0.9
 pydantic>=2.7,<3.0
 requests>=2.31
 Pillow>=10.0
+pdfplumber>=0.11.0
 # Optional skin-model dependencies; install separately when ready:
 # torch>=2.2
 # torchvision>=0.17
