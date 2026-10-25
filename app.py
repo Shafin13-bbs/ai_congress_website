@@ -31,7 +31,7 @@ MAX_DOC_BYTES = 10 * 1024 * 1024
 app = FastAPI(
     title="DiagNova's Prediction API",
     description="Multi-modal educational screening support prototype with OCR, PubMed evidence integration, and custom description analysis.",
-    version="0.4.0",
+    version="0.5.0",
 )
 security = HTTPBearer(auto_error=False)
 app.mount("/static", StaticFiles(directory=APP_DIR / "static"), name="static")
@@ -237,7 +237,6 @@ KNOWLEDGE_BASE = [
 def screen_rules(data: ScreenIn) -> dict[str, Any]:
     symptoms = set(data.symptoms)
     
-    # NLP keyword enhancement: automatically map custom description text to symptom flags
     desc_text = (data.description or "").lower()
     if "sugar" in desc_text or "diabetes" in desc_text or "glucose" in desc_text or "thirst" in desc_text:
         symptoms.add("thirst")
@@ -273,7 +272,6 @@ def screen_rules(data: ScreenIn) -> dict[str, Any]:
                 points += weight
                 evidence.append(explanation)
         
-        # Add a tiny boost/note if custom description matched
         if data.description:
             evidence.append(f"Reviewed custom description text: \"{data.description[:60]}...\"")
 
@@ -289,7 +287,7 @@ def screen_rules(data: ScreenIn) -> dict[str, Any]:
     ranked.sort(key=lambda x: (x["rule_points"], len(x["evidence"])), reverse=True)
     return {
         "created_at": utc_now(),
-        "engine": "DiagNova's Prediction Rule Engine v0.4",
+        "engine": "DiagNova's Prediction Rule Engine v0.5",
         "red_flags": red_flags,
         "urgent_notice": bool(red_flags),
         "matches": ranked,
