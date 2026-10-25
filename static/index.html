@@ -13,20 +13,24 @@ main{max-width:1220px;margin:0 auto;padding:30px 22px 60px}.hero{background:line
 .tabs{display:flex;gap:7px;margin:22px 0;flex-wrap:wrap}.tab{border:1px solid var(--line);border-radius:10px;padding:10px 14px;background:var(--card);color:var(--muted);font-weight:700;font-size:13px}.tab.active{background:var(--navy);border-color:var(--navy);color:#fff}
 .grid{display:grid;grid-template-columns:minmax(0,1.03fr) minmax(0,.97fr);gap:18px}.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;box-shadow:var(--shadow);min-width:0}.cardhead{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:18px}.card h2{font-size:18px;letter-spacing:-.35px;margin:0}.sub{font-size:12px;color:var(--muted);margin-top:5px}.step{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--blue);font-weight:850;background:var(--soft);border-radius:8px;padding:6px 8px;white-space:nowrap}
 label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bottom:7px}.field{margin-bottom:17px}input[type=text],input[type=email],input[type=password],input[type=number],select,textarea{width:100%;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:10px;padding:11px 12px;outline:none}input:focus,select:focus,textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #4777ee1a}.fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.symptoms{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.sym{display:flex;align-items:center;gap:9px;border:1px solid var(--line);border-radius:10px;padding:10px;font-size:12px;color:var(--ink);cursor:pointer}.sym input{accent-color:var(--blue)}.sectionlabel{font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:850;color:var(--muted);margin:22px 0 10px}.primary{background:var(--blue);border:0;border-radius:11px;color:white;font-weight:800;padding:12px 16px;box-shadow:0 7px 16px #4777ee30}.secondary{background:var(--soft);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink);font-weight:700;font-size:12px}.danger{background:var(--redbg);color:var(--red);border:1px solid #eab7be;border-radius:10px;padding:9px 12px;font-size:12px;font-weight:800}.wide{width:100%}.savecheck{display:flex;gap:9px;align-items:flex-start;margin:15px 0;color:var(--muted);font-size:12px}.savecheck input{margin-top:3px;accent-color:var(--blue)}.empty{padding:30px 15px;text-align:center;color:var(--muted);font-size:13px;border:1px dashed var(--line);border-radius:13px}.empty .big{font-size:28px;margin-bottom:8px}
-.result{border:1px solid var(--line);border-radius:13px;padding:15px;margin:11px 0}.resulttop{display:flex;justify-content:space-between;gap:12px}.result h3{margin:0;font-size:14px}.tag{font-size:10px;font-weight:800;border-radius:6px;padding:5px 7px;background:var(--soft);color:var(--blue);height:max-content}.muted{color:var(--muted);font-size:12px}.result ul{padding-left:17px;color:var(--muted);font-size:12px;margin-bottom:0}.redflag{background:var(--redbg);border:1px solid #e9aeb6;border-radius:12px;padding:14px;color:var(--red);font-size:12px;margin-bottom:14px}.redflag strong{display:block;font-size:14px;margin-bottom:6px}.footer{color:var(--muted);font-size:11px;text-align:center;margin-top:25px}.tiny{font-size:10px;color:var(--muted)}
+.result{border:1px solid var(--line);border-radius:13px;padding:15px;margin:11px 0}.resulttop{display:flex;justify-content:space-between;gap:12px}.result h3{margin:0;font-size:14px}.tag{font-size:10px;font-weight:800;border-radius:6px;padding:5px 7px;background:var(--soft);color:var(--blue);height:max-content}.muted{color:var(--muted);font-size:12px}.result ul{padding-left:17px;color:var(--muted);font-size:12px;margin-bottom:0}.redflag{background:var(--redbg);border:1px solid #e9aeb6;border-radius:12px;padding:14px;color:var(--red);font-size:12px;margin-bottom:14px}.redflag strong{display:block;font-size:14px;margin-bottom:6px}
+.record-item{border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:10px;background:var(--card)}
+.record-clickable{cursor:pointer;color:var(--blue);font-weight:700;text-decoration:underline;}
+.record-clickable:hover{opacity:0.8}
+.footer{color:var(--muted);font-size:11px;text-align:center;margin-top:25px}.tiny{font-size:10px;color:var(--muted)}
 @media(max-width:850px){.grid{grid-template-columns:1fr}.topbar{padding:12px 16px}main{padding:20px 14px 40px}.card{padding:17px}}
 </style>
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><div class="logo">✳</div><div>DiagNova's <span style="color:#6fe0d8">Prediction</span><div style="font-size:10px;font-weight:600;color:#b8c9dc;letter-spacing:1.4px">SCREENING SUPPORT · MVP v0.4</div></div></div>
+  <div class="brand"><div class="logo">✳</div><div>DiagNova's <span style="color:#6fe0d8">Prediction</span><div style="font-size:10px;font-weight:600;color:#b8c9dc;letter-spacing:1.4px">SCREENING SUPPORT · MVP v0.5</div></div></div>
   <div class="nav-actions"><span id="whoami" class="tiny" style="color:#c6d8e9"></span><button id="themeBtn" class="topbtn" type="button">◐ Theme</button><button id="logoutBtn" class="topbtn hidden" type="button">Sign out</button></div>
 </header>
 <main>
 <section class="hero" style="background:linear-gradient(120deg,#122947,#193e68 60%,#235c79);color:white;padding:32px clamp(20px,4vw,44px);border-radius:24px;position:relative;overflow:hidden;box-shadow:var(--shadow)">
-  <div class="eyebrow" style="color:#8fe5dc;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:800">Multi-Modal AI · Transparent Rules · Custom Descriptions</div>
+  <div class="eyebrow" style="color:#8fe5dc;font-size:11px;letter-spacing:1.8px;text-transform:uppercase;font-weight:800">Multi-Modal AI · Transparent Rules · Clickable History</div>
   <h1 style="font-size:clamp(27px,4vw,43px);line-height:1.12;letter-spacing:-1.4px;max-width:730px;margin:10px 0 12px">Better questions. Clearer next steps.</h1>
-  <p style="color:#d1dfed;max-width:670px;margin:0;font-size:15px">Describe your symptoms in your own words, select checkboxes, upload lab reports, and analyze multi-modal scans.</p>
+  <p style="color:#d1dfed;max-width:670px;margin:0;font-size:15px">Review saved screenings with direct diagnosis summaries and click to view full reports.</p>
   <div class="pill" style="display:inline-flex;gap:7px;align-items:center;border-radius:99px;background:#ffffff12;border:1px solid #ffffff24;padding:6px 10px;font-size:11px;color:#d9e9f8;margin-top:20px">✦ Educational decision-support prototype &nbsp;·&nbsp; Not a diagnosis</div>
 </section>
 <div class="notice"><strong>Important:</strong> DiagNova's Prediction is an MVP prototype, not a medical device. It has not been clinically validated.</div>
@@ -65,10 +69,9 @@ label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bot
           <div class="sectionlabel">Symptoms & Risk Indicators</div>
           <div id="symptomGrid" class="symptoms"></div>
 
-          <!-- NEW: Custom Disease Description Text Box -->
           <div class="field" style="margin-top:18px;">
             <label for="customDescription">Custom Disease / Symptom Description (optional)</label>
-            <textarea id="customDescription" rows="3" placeholder="Describe your symptoms or condition in your own words (e.g. I have been feeling unusually thirsty and dizzy after meals)..."></textarea>
+            <textarea id="customDescription" rows="3" placeholder="Describe your symptoms or condition in your own words..."></textarea>
             <div class="tiny" style="margin-top:4px;">Our AI engine analyzes keywords from your description to enhance rule matching.</div>
           </div>
 
@@ -144,13 +147,13 @@ label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bot
   <!-- TAB 4: RECORDS -->
   <section id="tab-records" class="tabpage hidden">
     <div class="card">
-      <div class="cardhead"><div><h2>Your Saved Records</h2><div class="sub">Private history log.</div></div><button id="refreshRecords" class="secondary" type="button">Refresh</button></div>
+      <div class="cardhead"><div><h2>Your Saved Records</h2><div class="sub">Private history log with clickable diagnoses.</div></div><button id="refreshRecords" class="secondary" type="button">Refresh</button></div>
       <div id="recordsMsg" class="message" role="status"></div>
-      <div id="recordsList" class="records"><div class="empty">Loading records…</div></div>
+      <div id="recordsList"><div class="empty">Loading records…</div></div>
     </div>
   </section>
 </section>
-<div class="footer">DiagNova's Prediction MVP v0.4 · Multi-Modal & Description OCR Enabled</div>
+<div class="footer">DiagNova's Prediction MVP v0.5 · Clickable Records Enabled</div>
 </main>
 <script>
 const $=id=>document.getElementById(id);
@@ -209,7 +212,6 @@ function numberOrNull(id){const v=$(id).value.trim();return v===""?null:Number(v
 
 $("clearScreen").onclick=()=>{$("screenForm").reset();$("screenResults").innerHTML='<div class="empty"><div class="big">⌁</div><strong>No screening run yet</strong><br>Choose symptoms or add values, then run the screen.</div>';msg("screenMsg","Inputs cleared.");};
 
-// Screening form handler with description text
 $("screenForm").onsubmit=async e=>{
   e.preventDefault(); msg("screenMsg","Evaluating transparent rules & description…");
   const selected=[...$("symptomGrid").querySelectorAll("input:checked")].map(x=>x.value);
@@ -241,7 +243,6 @@ function renderScreen(d){
   $("screenResults").innerHTML=html;
 }
 
-// OCR Report Parser handler
 $("parseReportBtn").onclick=async()=>{
   const f=$("reportFile").files[0];
   if(!f){msg("reportMsg","Choose a report file first.","error");return;}
@@ -260,7 +261,6 @@ $("parseReportBtn").onclick=async()=>{
   }catch(e){msg("reportMsg",e.message,"error");}
 };
 
-// Multi-modal image handler
 $("multiFile").onchange=()=>{
   const f=$("multiFile").files[0];
   if(f){$("multiPreview").src=URL.createObjectURL(f);$("multiPreview").classList.remove("hidden");}
@@ -282,14 +282,63 @@ $("predictMulti").onclick=async()=>{
   }catch(e){msg("multiMsg",e.message,"error");}
 };
 
+// Upgraded refreshRecords with clickable diagnosis inspection
 async function refreshRecords(){
   if(!token)return;
   try{
     const d=await api("/records");
     if(!d.records.length){$("recordsList").innerHTML='<div class="empty">No saved records found.</div>';return;}
-    $("recordsList").innerHTML=d.records.map(r=>`<div class="record"><div><strong>${escapeHtml(r.title)}</strong><small>${escapeHtml(r.kind)} · ${new Date(r.created_at).toLocaleString()}</small></div><button class="danger" onclick="deleteRecord(${r.id})" type="button">Delete</button></div>`).join("");
+    
+    $("recordsList").innerHTML=d.records.map(r=>{
+      let diagnosisSummary = "";
+      let detailContent = "";
+      
+      if(r.kind === "screening" && r.payload && r.payload.matches) {
+        const topMatch = r.payload.matches[0];
+        diagnosisSummary = topMatch ? `Top Diagnosis: ${escapeHtml(topMatch.name)} (${escapeHtml(topMatch.match_label)})` : "No rule matched";
+        detailContent = `
+          <div style="margin-top:10px;padding:10px;background:var(--soft);border-radius:8px;font-size:12px;">
+            <b>Specialist:</b> ${escapeHtml(topMatch?.specialist || 'N/A')}<br>
+            <b>Category:</b> ${escapeHtml(topMatch?.category || 'N/A')}<br>
+            <b>Next Step:</b> ${escapeHtml(topMatch?.next_step || 'N/A')}<br>
+            <b>Evidence:</b> <ul>${(topMatch?.evidence || []).map(e=>`<li>${escapeHtml(e)}</li>`).join("")}</ul>
+          </div>`;
+      } else if(r.kind === "report_ocr") {
+        diagnosisSummary = `OCR Report Parsed (${Object.keys(r.payload.parsed_labs || {}).length} biomarkers found)`;
+        detailContent = `<div style="margin-top:10px;padding:10px;background:var(--soft);border-radius:8px;font-size:12px;">File: ${escapeHtml(r.payload.filename)}</div>`;
+      } else if(r.kind === "image_multimodal") {
+        const topRes = r.payload.results?.[0];
+        diagnosisSummary = topRes ? `Vision Diagnosis: ${escapeHtml(topRes.label)} (${(topRes.score*100).toFixed(1)}%)` : "Analysis complete";
+        detailContent = `<div style="margin-top:10px;padding:10px;background:var(--soft);border-radius:8px;font-size:12px;">Category: ${escapeHtml(r.payload.category)}</div>`;
+      } else {
+        diagnosisSummary = "Saved Record";
+        detailContent = `<pre style="font-size:11px;">${escapeHtml(JSON.stringify(r.payload, null, 2))}</pre>`;
+      }
+
+      return `
+        <div class="record-item" id="rec-${r.id}">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:12px;">
+            <div>
+              <strong>${escapeHtml(r.title)}</strong>
+              <div style="margin-top:4px;">
+                <span class="record-clickable" onclick="toggleRecordDetail(${r.id})">🔍 <span>${diagnosisSummary}</span> (Click to view diagnosis)</span>
+              </div>
+              <small style="color:var(--muted);font-size:11px;margin-top:4px;display:block;">${escapeHtml(r.kind)} · ${new Date(r.created_at).toLocaleString()}</small>
+            </div>
+            <button class="danger" onclick="deleteRecord(${r.id})" type="button">Delete</button>
+          </div>
+          <div id="detail-${r.id}" class="hidden" style="margin-top:10px;border-top:1px solid var(--line);padding-top:10px;">
+            ${detailContent}
+          </div>
+        </div>`;
+    }).join("");
   }catch(e){msg("recordsMsg",e.message,"error");}
 }
+
+window.toggleRecordDetail = id => {
+  const el = $("detail-"+id);
+  if(el) el.classList.toggle("hidden");
+};
 
 window.deleteRecord=async id=>{
   if(!confirm("Delete record?"))return;
