@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>DiagNova — Screening Support</title>
+<title>DiagNova — Multi-Modal Screening Support</title>
 <style>
 :root{--navy:#10253f;--blue:#4777ee;--cyan:#61d5d0;--ink:#18283d;--muted:#6e7d91;--paper:#f4f7fb;--card:#fff;--line:#e1e8f0;--soft:#edf3ff;--red:#a52b36;--redbg:#fff0f0;--green:#15795d;--shadow:0 12px 40px #19365c0d}
 [data-theme=dark]{--paper:#0b1422;--card:#132238;--ink:#eaf1fb;--muted:#9eacc1;--line:#263a55;--soft:#1b3151;--redbg:#391f2b;--red:#ffb0b5;--green:#72dfb4;--shadow:0 12px 40px #0003}
@@ -22,21 +22,21 @@ label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bot
 </head>
 <body>
 <header class="topbar">
-  <div class="brand"><div class="logo">✳</div><div>Diag<span>Nova</span><div style="font-size:10px;font-weight:600;color:#b8c9dc;letter-spacing:1.4px">SCREENING SUPPORT · MVP</div></div></div>
+  <div class="brand"><div class="logo">✳</div><div>Diag<span>Nova</span><div style="font-size:10px;font-weight:600;color:#b8c9dc;letter-spacing:1.4px">SCREENING SUPPORT · MVP v0.3</div></div></div>
   <div class="nav-actions"><span id="whoami" class="tiny" style="color:#c6d8e9"></span><button id="themeBtn" class="topbtn">◐ Theme</button><button id="logoutBtn" class="topbtn hidden">Sign out</button></div>
 </header>
 <main>
 <section class="hero">
-  <div class="eyebrow">Evidence-aware · transparent · user-controlled</div>
+  <div class="eyebrow">Multi-modal AI · Transparent Rules · OCR Reports</div>
   <h1>Better questions. Clearer next steps.</h1>
-  <p>Bring symptoms and basic lab values together, see which transparent rules matched, and prepare for a more informed conversation with a qualified clinician.</p>
+  <p>Bring multi-part images, medical report OCR scans, symptoms, and lab values together into a single transparent decision-support tool.</p>
   <div class="pill">✦ Educational decision-support prototype &nbsp;·&nbsp; Not a diagnosis</div>
 </section>
-<div class="notice"><strong>Important:</strong> DiagNova is a student prototype, not a medical device. It has not been clinically validated and must not be used to diagnose, rule out illness, or make treatment decisions. If symptoms feel severe or life-threatening, seek urgent local medical care.</div>
+<div class="notice"><strong>Important:</strong> DiagNova is an MVP prototype, not a medical device. It has not been clinically validated. If symptoms feel severe or life-threatening, seek urgent local medical care.</div>
 
 <section id="authView" class="authwrap">
   <div class="card">
-    <div class="cardhead"><div><h2>Your private workspace</h2><div class="sub">Sign in to run a screening or create an account for this demo.</div></div><span class="step">ACCOUNT</span></div>
+    <div class="cardhead"><div><h2>Your private workspace</h2><div class="sub">Sign in to run screenings or create an account for this demo.</div></div><span class="step">ACCOUNT</span></div>
     <div class="authswitch"><button id="showLogin" class="tab active">Sign in</button><button id="showRegister" class="tab">Create account</button></div>
     <form id="authForm">
       <div id="nameField" class="field hidden"><label for="displayName">Display name</label><input id="displayName" type="text" maxlength="80" autocomplete="name"></div>
@@ -44,100 +44,241 @@ label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin-bot
       <div class="field"><label for="password">Password</label><input id="password" type="password" minlength="10" autocomplete="current-password" required><div class="tiny">At least 10 characters.</div></div>
       <button class="primary wide" id="authSubmit" type="submit">Sign in securely</button><div id="authMsg" class="message" role="status"></div>
     </form>
-    <div class="tiny">Prototype note: use a unique demo password. Use HTTPS and a reviewed authentication/session setup before deployment with real health information.</div>
   </div>
 </section>
 
 <section id="appView" class="hidden">
   <div class="tabs">
-    <button class="tab active" data-tab="screening">✦ Symptom + lab screen</button>
-    <button class="tab" data-tab="skin">◉ Skin image experiment</button>
-    <button class="tab" data-tab="records">▤ Saved records</button>
+    <button class="tab active" data-tab="screening">✦ Symptom + Lab Screen</button>
+    <button class="tab" data-tab="report">📄 Medical Report OCR</button>
+    <button class="tab" data-tab="multimodal">👁️ Multi-Modal Image Router</button>
+    <button class="tab" data-tab="records">▤ Saved Records</button>
   </div>
+
+  <!-- TAB 1: SCREENING -->
   <section id="tab-screening" class="tabpage">
     <div class="grid">
       <div class="card">
-        <div class="cardhead"><div><h2>Screening inputs</h2><div class="sub">Only enter information you choose to share with this local demo.</div></div><span class="step">01 · INPUT</span></div>
+        <div class="cardhead"><div><h2>Screening Inputs</h2><div class="sub">Select symptoms and manual measurements.</div></div><span class="step">01 · INPUT</span></div>
         <form id="screenForm">
           <div class="fields">
-            <div class="field"><label for="age">Age (optional)</label><input id="age" type="number" min="0" max="120" placeholder="e.g. 24"></div>
-            <div class="field"><label for="sex">Sex (optional)</label><select id="sex"><option value="">Prefer not to say</option><option>Female</option><option>Male</option><option>Intersex</option><option>Other / self-describe</option></select></div>
+            <div class="field"><label for="age">Age</label><input id="age" type="number" min="0" max="120" placeholder="e.g. 35"></div>
+            <div class="field"><label for="sex">Sex</label><select id="sex"><option value="">Prefer not to say</option><option>Female</option><option>Male</option></select></div>
           </div>
-          <div class="sectionlabel">Symptoms · choose any that apply</div>
+          <div class="sectionlabel">Symptoms & Risk Indicators</div>
           <div id="symptomGrid" class="symptoms"></div>
-          <div class="sectionlabel">Lab / measurement values · optional</div>
+          <div class="sectionlabel">Lab / Measurements</div>
           <div class="fields">
-            <div class="field"><label for="glucose">Fasting glucose (mg/dL)</label><input id="glucose" type="number" min="20" max="800" step="any" placeholder="Leave blank if unknown"></div>
-            <div class="field"><label for="hemoglobin">Hemoglobin (g/dL)</label><input id="hemoglobin" type="number" min="1" max="30" step="any" placeholder="Leave blank if unknown"></div>
-            <div class="field"><label for="ldl">LDL cholesterol (mg/dL)</label><input id="ldl" type="number" min="5" max="1000" step="any" placeholder="Leave blank if unknown"></div>
-            <div class="field"><label for="systolic">Systolic BP (mmHg)</label><input id="systolic" type="number" min="40" max="300" step="any" placeholder="e.g. 120"></div>
-            <div class="field"><label for="diastolic">Diastolic BP (mmHg)</label><input id="diastolic" type="number" min="20" max="200" step="any" placeholder="e.g. 80"></div>
+            <div class="field"><label for="glucose">Fasting Glucose (mg/dL)</label><input id="glucose" type="number" min="20" max="800" step="any" placeholder="e.g. 130"></div>
+            <div class="field"><label for="hemoglobin">Hemoglobin (g/dL)</label><input id="hemoglobin" type="number" min="1" max="30" step="any" placeholder="e.g. 11.5"></div>
+            <div class="field"><label for="systolic">Systolic BP (mmHg)</label><input id="systolic" type="number" min="40" max="300" step="any" placeholder="e.g. 135"></div>
+            <div class="field"><label for="diastolic">Diastolic BP (mmHg)</label><input id="diastolic" type="number" min="20" max="200" step="any" placeholder="e.g. 85"></div>
           </div>
-          <label class="savecheck"><input id="saveScreen" type="checkbox"><span><strong>Save this result to my private history.</strong><br>Unchecked by default. Nothing is saved unless you request it.</span></label>
-          <div class="fields"><button class="primary" type="submit">Run transparent screen →</button><button class="secondary" id="clearScreen" type="button">Clear inputs</button></div>
+          <label class="savecheck"><input id="saveScreen" type="checkbox"><span><strong>Save result to my private history.</strong></span></label>
+          <div class="fields"><button class="primary" type="submit">Run Transparent Screen →</button><button class="secondary" id="clearScreen" type="button">Clear</button></div>
           <div id="screenMsg" class="message" role="status"></div>
         </form>
       </div>
       <div class="card">
-        <div class="cardhead"><div><h2>Screening report</h2><div class="sub">Every match includes its supporting rules.</div></div><span class="step">02 · REVIEW</span></div>
-        <div id="screenResults"><div class="empty"><div class="big">⌁</div><strong>No screening run yet</strong><br>Choose symptoms or add values, then run the screen.</div></div>
-        <div class="graph"><h3>HOW THE RULE ENGINE WORKS</h3><div class="graphrow"><span class="node">Your inputs</span><span class="arrow">→</span><span class="node">Versioned rules</span><span class="arrow">→</span><span class="node">Traceable matches</span></div><div class="tiny" style="color:#b8c9dc;margin-top:10px">This is a real, small rules engine—not a trained disease-prediction model or a clinical knowledge graph.</div></div>
+        <div class="cardhead"><div><h2>Transparent Screening Report</h2><div class="sub">Matches include rule reasoning weights.</div></div><span class="step">02 · REVIEW</span></div>
+        <div id="screenResults"><div class="empty"><div class="big">⌁</div><strong>No screening run yet</strong><br>Fill inputs and run screen.</div></div>
       </div>
     </div>
   </section>
-  <section id="tab-skin" class="tabpage hidden">
+
+  <!-- TAB 2: MEDICAL REPORT OCR PARSER -->
+  <section id="tab-report" class="tabpage hidden">
     <div class="grid">
       <div class="card">
-        <div class="cardhead"><div><h2>Skin image experiment</h2><div class="sub">Upload a saved image file only. No live camera access.</div></div><span class="step">ML · OPTIONAL</span></div>
-        <div class="redflag"><strong>Research-only model</strong>The model card explicitly says this model is not validated for clinical use and is not suitable for patient triage or treatment decisions. Use this only to demonstrate an inference pipeline.</div>
-        <div class="skinbox"><div class="uploadicon">▧</div><strong>Choose an image from your device</strong><div class="sub">JPG, PNG or WebP · maximum 8 MB · clinical/macroscopic photo</div><input id="skinFile" class="fileinput" type="file" accept="image/jpeg,image/png,image/webp"><img id="skinPreview" class="skinpreview hidden" alt="Selected skin image preview"><label class="savecheck" style="text-align:left"><input id="saveSkin" type="checkbox"><span><strong>Save the result summary to my private history.</strong><br>Image itself is never saved by this endpoint.</span></label><button id="predictSkin" class="primary wide" type="button">Run pretrained model</button><div id="skinMsg" class="message" role="status"></div></div>
+        <div class="cardhead"><div><h2>Upload Medical Report (PDF / Text)</h2><div class="sub">Automatic OCR and biomarker extraction.</div></div><span class="step">OCR · PARSER</span></div>
+        <div class="skinbox">
+          <div class="uploadicon">📄</div><strong>Choose a medical report file</strong>
+          <div class="sub">PDF lab summary or diagnostic printout</div>
+          <input id="reportFile" class="fileinput" type="file" accept=".pdf,.txt">
+          <button id="parseReportBtn" class="primary wide" type="button">Extract Biomarkers & Analyze</button>
+          <div id="reportMsg" class="message" role="status"></div>
+        </div>
       </div>
       <div class="card">
-        <div class="cardhead"><div><h2>Model output</h2><div class="sub">Class scores are not clinical probabilities.</div></div><span class="step">03 · OUTPUT</span></div>
-        <div id="skinResults"><div class="empty"><div class="big">◉</div><strong>Waiting for an uploaded image</strong><br>Enable the optional model in the README before using this feature.</div></div>
-        <div class="line"></div><div class="muted">Model card: <a href="https://huggingface.co/RevelaCap/clinical-skin-condition-v1" target="_blank" rel="noopener">RevelaCap clinical-skin-condition-v1 ↗</a></div>
+        <div class="cardhead"><div><h2>Extracted Data Preview</h2><div class="sub">Parsed values loaded into screening parameters.</div></div><span class="step">RESULTS</span></div>
+        <div id="reportResults"><div class="empty"><div class="big">📋</div><strong>Waiting for report upload</strong><br>Upload a file to automatically parse lab values.</div></div>
       </div>
     </div>
   </section>
+
+  <!-- TAB 3: MULTI-MODAL IMAGE ROUTER -->
+  <section id="tab-multimodal" class="tabpage hidden">
+    <div class="grid">
+      <div class="card">
+        <div class="cardhead"><div><h2>Multi-Modal Image Analysis</h2><div class="sub">Analyze skin, eyes, or oncology diagnostic images.</div></div><span class="step">AI · VISION</span></div>
+        <div class="field">
+          <label for="imageCategory">Select Image Specialty / Category</label>
+          <select id="imageCategory">
+            <option value="skin">Dermatology (Skin Conditions & Lesions)</option>
+            <option value="eye">Ophthalmology (Retinal / Eye Scans)</option>
+            <option value="oncology">Oncology / Radiology (Mammography & Masses)</option>
+          </select>
+        </div>
+        <div class="skinbox">
+          <div class="uploadicon">🖼️</div><strong>Upload Body Part / Scan Image</strong>
+          <div class="sub">JPG, PNG or WebP · Max 8 MB</div>
+          <input id="multiFile" class="fileinput" type="file" accept="image/jpeg,image/png,image/webp">
+          <img id="multiPreview" class="skinpreview hidden" alt="Preview">
+          <label class="savecheck" style="text-align:left"><input id="saveMulti" type="checkbox"><span><strong>Save summary to history.</strong></span></label>
+          <button id="predictMulti" class="primary wide" type="button">Run Multi-Modal Classifier</button>
+          <div id="multiMsg" class="message" role="status"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><div><h2>Classification & Reasoning Output</h2><div class="sub">Confidence scores and clinical explanation.</div></div><span class="step">OUTPUT</span></div>
+        <div id="multiResults"><div class="empty"><div class="big">👁️</div><strong>Waiting for image upload</strong><br>Select category and upload image.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TAB 4: RECORDS -->
   <section id="tab-records" class="tabpage hidden">
     <div class="card">
-      <div class="cardhead"><div><h2>Your saved records</h2><div class="sub">Private to your account. Save is opt-in; deletion is available whenever you choose.</div></div><button id="refreshRecords" class="secondary">Refresh</button></div>
-      <div id="recordsMsg" class="message" role="status"></div><div id="recordsList" class="records"><div class="empty">Loading your records…</div></div>
-      <div class="line"></div><div style="display:flex;justify-content:space-between;align-items:center;gap:14px;flex-wrap:wrap"><div><strong style="font-size:13px">Delete all saved records</strong><div class="sub">Only use this if you want to erase your entire history. This cannot be undone.</div></div><button id="deleteAll" class="danger">Delete all records…</button></div>
+      <div class="cardhead"><div><h2>Your Saved Records</h2><div class="sub">Private history log.</div></div><button id="refreshRecords" class="secondary">Refresh</button></div>
+      <div id="recordsMsg" class="message" role="status"></div>
+      <div id="recordsList" class="records"><div class="empty">Loading records…</div></div>
     </div>
   </section>
 </section>
-<div class="footer">DiagNova MVP · Rule set v0.2 · Private-by-default saving · No clinical validation</div>
+<div class="footer">DiagNova MVP v0.3 · Multi-Modal & OCR Enabled</div>
 </main>
 <script>
 const $=id=>document.getElementById(id);
-let token=localStorage.getItem("diagnova_token")||"", user=null, authMode="login", lastScreen=null, lastSkin=null, symptoms=[];
+let token=localStorage.getItem("diagnova_token")||"", user=null, authMode="login";
 const API="/api";
 function escapeHtml(s){return String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));}
 function msg(id,text,type=""){const el=$(id);el.textContent=text;el.className="message "+type;}
-async function api(path,opts={}){const headers={...(opts.headers||{})};if(token)headers.Authorization="Bearer "+token;if(opts.body && !(opts.body instanceof FormData))headers["Content-Type"]="application/json";const r=await fetch(API+path,{...opts,headers});let data={};try{data=await r.json()}catch{}if(!r.ok)throw new Error(data.detail||"Request failed. Please try again.");return data;}
-async function loadSymptoms(){const d=await api("/symptoms");$("symptomGrid").innerHTML=d.symptoms.map(s=>`<label class="sym"><input type="checkbox" value="${escapeHtml(s.key)}"><span>${escapeHtml(s.label)}</span></label>`).join("");}
+async function api(path,opts={}){const headers={...(opts.headers||{})};if(token)headers.Authorization="Bearer "+token;if(opts.body && !(opts.body instanceof FormData))headers["Content-Type"]="application/json";const r=await fetch(API+path,{...opts,headers});let data={};try{data=await r.json()}catch{}if(!r.ok)throw new Error(data.detail||"Request failed.");return data;}
+
+async function loadSymptoms(){
+  const d=await api("/symptoms");
+  $("symptomGrid").innerHTML=d.symptoms.map(s=>`<label class="sym"><input type="checkbox" value="${escapeHtml(s.key)}"><span>${escapeHtml(s.label)}</span></label>`).join("");
+}
+
 function showAuth(){ $("authView").classList.remove("hidden");$("appView").classList.add("hidden");$("logoutBtn").classList.add("hidden");$("whoami").textContent=""; }
 function showApp(){ $("authView").classList.add("hidden");$("appView").classList.remove("hidden");$("logoutBtn").classList.remove("hidden");$("whoami").textContent=user?.display_name||user?.email||""; }
-function setAuthMode(mode){authMode=mode;$("showLogin").classList.toggle("active",mode==="login");$("showRegister").classList.toggle("active",mode==="register");$("nameField").classList.toggle("hidden",mode!=="register");$("displayName").required=mode==="register";$("password").autocomplete=mode==="login"?"current-password":"new-password";$("authSubmit").textContent=mode==="login"?"Sign in securely":"Create my account";msg("authMsg","");}
-$("showLogin").onclick=()=>setAuthMode("login");$("showRegister").onclick=()=>setAuthMode("register");
-$("authForm").onsubmit=async e=>{e.preventDefault();msg("authMsg","Working…");try{const body={email:$("email").value.trim(),password:$("password").value};let path="/auth/login";if(authMode==="register"){path="/auth/register";body.display_name=$("displayName").value.trim();}const d=await api(path,{method:"POST",body:JSON.stringify(body)});token=d.token;localStorage.setItem("diagnova_token",token);user=d.user;showApp();await refreshRecords();msg("authMsg","");}catch(err){msg("authMsg",err.message,"error");}};
+
+$("authForm").onsubmit=async e=>{
+  e.preventDefault(); msg("authMsg","Working…");
+  try{
+    const body={email:$("email").value.trim(),password:$("password").value};
+    let path=authMode==="login"?"/auth/login":"/auth/register";
+    if(authMode==="register") body.display_name=$("displayName").value.trim();
+    const d=await api(path,{method:"POST",body:JSON.stringify(body)});
+    token=d.token; localStorage.setItem("diagnova_token",token); user=d.user;
+    showApp(); await refreshRecords(); msg("authMsg","");
+  }catch(err){msg("authMsg",err.message,"error");}
+};
+
 $("logoutBtn").onclick=()=>{token="";user=null;localStorage.removeItem("diagnova_token");showAuth();};
 $("themeBtn").onclick=()=>{const next=document.documentElement.dataset.theme==="dark"?"light":"dark";document.documentElement.dataset.theme=next;localStorage.setItem("diagnova_theme",next);};
 document.documentElement.dataset.theme=localStorage.getItem("diagnova_theme")||"light";
-document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));document.querySelectorAll(".tabpage").forEach(x=>x.classList.add("hidden"));$("tab-"+b.dataset.tab).classList.remove("hidden");if(b.dataset.tab==="records")refreshRecords();});
+
+document.querySelectorAll("[data-tab]").forEach(b=>b.onclick=()=>{
+  document.querySelectorAll("[data-tab]").forEach(x=>x.classList.toggle("active",x===b));
+  document.querySelectorAll(".tabpage").forEach(x=>x.classList.add("hidden"));
+  $("tab-"+b.dataset.tab).classList.remove("hidden");
+  if(b.dataset.tab==="records") refreshRecords();
+});
+
 function numberOrNull(id){const v=$(id).value.trim();return v===""?null:Number(v);}
-$("clearScreen").onclick=()=>{$("screenForm").reset();$("screenResults").innerHTML='<div class="empty"><div class="big">⌁</div><strong>No screening run yet</strong><br>Choose symptoms or add values, then run the screen.</div>';lastScreen=null;msg("screenMsg","Inputs cleared.");};
-$("screenForm").onsubmit=async e=>{e.preventDefault();msg("screenMsg","Evaluating transparent rules…");const selected=[...$("symptomGrid").querySelectorAll("input:checked")].map(x=>x.value);const labs={fasting_glucose:numberOrNull("glucose"),hemoglobin:numberOrNull("hemoglobin"),ldl:numberOrNull("ldl"),systolic_bp:numberOrNull("systolic"),diastolic_bp:numberOrNull("diastolic")};const body={symptoms:selected,age:numberOrNull("age"),sex:$("sex").value||null,labs};try{const d=await api("/screen",{method:"POST",body:JSON.stringify(body)});lastScreen=d;renderScreen(d);msg("screenMsg","Screen complete. Review the limitations and speak with a clinician.","ok");if($("saveScreen").checked){await api("/records",{method:"POST",body:JSON.stringify({kind:"screening",title:"Symptom + lab screen",payload:d})});msg("screenMsg","Screen complete and saved to your private history.","ok");}}catch(err){msg("screenMsg",err.message,"error");}};
-function renderScreen(d){let html="";if(d.urgent_notice){html+=`<div class="redflag"><strong>Red-flag symptom combination</strong>${d.red_flags.map(x=>`<p>${escapeHtml(x)}</p>`).join("")}<b>Seek urgent medical assessment. This prototype cannot assess how serious your symptoms are.</b></div>`;}if(!d.matches.length){html+='<div class="empty"><div class="big">⌁</div><strong>No rule matched the supplied inputs</strong><br>This does not mean you are healthy or rule out illness.</div>';}else{html+=d.matches.map((m,i)=>`<div class="result"><div class="resulttop"><div><h3>${i+1}. ${escapeHtml(m.name)}</h3><div class="muted">${escapeHtml(m.category)} · ${escapeHtml(m.specialist)}</div></div><span class="tag">${escapeHtml(m.match_label)}</span></div><ul>${m.evidence.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul><p class="muted"><b>Possible next step:</b> ${escapeHtml(m.next_step)}</p><button class="secondary" onclick="loadEvidence('${escapeHtml(m.name).replace(/'/g,"\\'")}', this)">Find related PubMed reading ↗</button><div id="ev-${i}" class="muted"></div></div>`).join("");}html+=`<div class="notice"><strong>Interpretation:</strong> ${escapeHtml(d.limitations)}</div>`;$("screenResults").innerHTML=html;}
-window.loadEvidence=async (condition,button)=>{const el=button?.nextElementSibling;if(el)el.textContent="Loading PubMed…";try{const d=await api("/evidence?condition="+encodeURIComponent(condition));const target=el||$("screenResults");target.innerHTML=d.articles.length?d.articles.map(a=>`<div class="modelresult"><a href="${escapeHtml(a.url)}" target="_blank" rel="noopener">${escapeHtml(a.title)}</a><div class="muted">${escapeHtml(a.journal)} ${escapeHtml(a.year)} · PMID ${escapeHtml(a.pmid)}</div></div>`).join(""):`<div class="muted">${escapeHtml(d.note)}</div>`;}catch(e){if(el)el.textContent=e.message;}};
-$("skinFile").onchange=()=>{const f=$("skinFile").files[0];$("skinPreview").classList.add("hidden");lastSkin=null;if(f){if(!f.type.startsWith("image/")){msg("skinMsg","Please choose an image file.","error");return;}const url=URL.createObjectURL(f);$("skinPreview").src=url;$("skinPreview").classList.remove("hidden");msg("skinMsg","Image selected. It will not be stored by the server.");}};
-$("predictSkin").onclick=async()=>{const f=$("skinFile").files[0];if(!f){msg("skinMsg","Choose an image file first.","error");return;}const fd=new FormData();fd.append("file",f);msg("skinMsg","Loading model / running inference. First run may take a few minutes…");$("predictSkin").disabled=true;try{const d=await api("/skin",{method:"POST",body:fd});lastSkin=d;renderSkin(d);msg("skinMsg","Inference completed. Treat output as an unvalidated research result.","ok");if($("saveSkin").checked){await api("/records",{method:"POST",body:JSON.stringify({kind:"skin",title:"Skin image experiment",payload:d})});msg("skinMsg","Inference completed and result summary saved. Image was not saved.","ok");}}catch(e){msg("skinMsg",e.message,"error");}finally{$("predictSkin").disabled=false;}};
-function renderSkin(d){$("skinResults").innerHTML=`<div class="notice"><strong>Model:</strong> ${escapeHtml(d.model)}<br>Input type: ${escapeHtml(d.input_type)}</div>`+d.results.map(r=>`<div class="modelresult"><div style="display:flex;justify-content:space-between;gap:12px"><b>${escapeHtml(r.label)}</b><span>${(r.score*100).toFixed(1)}% model score</span></div><div class="bar"><i style="width:${Math.max(0,Math.min(100,r.score*100))}%"></i></div></div>`).join("")+`<div class="notice"><strong>Important limitations</strong><ul>${d.limitations.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul></div>`;}
-async function refreshRecords(){if(!token)return;try{const d=await api("/records");if(!d.records.length){$("recordsList").innerHTML='<div class="empty"><div class="big">▤</div><strong>No saved records</strong><br>Screening results are not saved unless you check the opt-in box.</div>';return;}$("recordsList").innerHTML=d.records.map(r=>`<div class="record"><div><strong>${escapeHtml(r.title)}</strong><small>${escapeHtml(r.kind)} · ${new Date(r.created_at).toLocaleString()}</small></div><button class="danger" onclick="deleteRecord(${r.id})">Delete…</button></div>`).join("");}catch(e){msg("recordsMsg",e.message,"error");}}
-window.deleteRecord=async id=>{if(!confirm("Delete this saved record permanently? This only deletes the record you selected."))return;try{await api("/records/"+id,{method:"DELETE"});msg("recordsMsg","Record deleted.","ok");await refreshRecords();}catch(e){msg("recordsMsg",e.message,"error");}};
+
+// Screening form handler
+$("screenForm").onsubmit=async e=>{
+  e.preventDefault(); msg("screenMsg","Evaluating transparent rules…");
+  const selected=[...$("symptomGrid").querySelectorAll("input:checked")].map(x=>x.value);
+  const labs={fasting_glucose:numberOrNull("glucose"),hemoglobin:numberOrNull("hemoglobin"),systolic_bp:numberOrNull("systolic"),diastolic_bp:numberOrNull("diastolic")};
+  const body={symptoms:selected,age:numberOrNull("age"),sex:$("sex").value||null,labs};
+  try{
+    const d=await api("/screen",{method:"POST",body:JSON.stringify(body)});
+    renderScreen(d);
+    msg("screenMsg","Screen complete.","ok");
+    if($("saveScreen").checked){
+      await api("/records",{method:"POST",body:JSON.stringify({kind:"screening",title:"Symptom + lab screen",payload:d})});
+    }
+  }catch(err){msg("screenMsg",err.message,"error");}
+};
+
+function renderScreen(d){
+  let html="";
+  if(d.urgent_notice){html+=`<div class="redflag"><strong>Red-Flag Warning</strong>${d.red_flags.map(x=>`<p>${escapeHtml(x)}</p>`).join("")}</div>`;}
+  if(!d.matches.length){html+='<div class="empty"><strong>No rules matched inputs</strong></div>';}
+  else{
+    html+=d.matches.map((m,i)=>`<div class="result"><div class="resulttop"><div><h3>${i+1}. ${escapeHtml(m.name)}</h3><div class="muted">${escapeHtml(m.category)} · Specialist: ${escapeHtml(m.specialist)}</div></div><span class="tag">${escapeHtml(m.match_label)}</span></div><ul>${m.evidence.map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul><p class="muted"><b>Next Step:</b> ${escapeHtml(m.next_step)}</p></div>`).join("");
+  }
+  $("screenResults").innerHTML=html;
+}
+
+// OCR Report Parser handler
+$("parseReportBtn").onclick=async()=>{
+  const f=$("reportFile").files[0];
+  if(!f){msg("reportMsg","Choose a report file first.","error");return;}
+  const fd=new FormData(); fd.append("file",f);
+  msg("reportMsg","Parsing report and extracting values…");
+  try{
+    const d=await api("/parse-report",{method:"POST",body:fd});
+    if(d.parsed_labs.fasting_glucose) $("glucose").value = d.parsed_labs.fasting_glucose;
+    if(d.parsed_labs.hemoglobin) $("hemoglobin").value = d.parsed_labs.hemoglobin;
+    if(d.parsed_labs.systolic_bp) $("systolic").value = d.parsed_labs.systolic_bp;
+    if(d.parsed_labs.diastolic_bp) $("diastolic").value = d.parsed_labs.diastolic_bp;
+
+    $("reportResults").innerHTML=`<div class="notice"><strong>File:</strong> ${escapeHtml(d.filename)}<br><b>Reasoning:</b> ${escapeHtml(d.reasoning)}</div><pre style="font-size:11px;background:var(--soft);padding:10px;border-radius:8px;max-height:180px;overflow:auto;">${escapeHtml(d.extracted_text_preview)}</pre><p class="muted">Values successfully injected into your Screening Inputs tab!</p>`;
+    msg("reportMsg","Report parsed successfully!","ok");
+    await api("/records",{method:"POST",body:JSON.stringify({kind:"report_ocr",title:"Medical Report OCR: "+d.filename,payload:d})});
+  }catch(e){msg("reportMsg",e.message,"error");}
+};
+
+// Multi-modal image handler
+$("multiFile").onchange=()=>{
+  const f=$("multiFile").files[0];
+  if(f){$("multiPreview").src=URL.createObjectURL(f);$("multiPreview").classList.remove("hidden");}
+};
+
+$("predictMulti").onclick=async()=>{
+  const f=$("multiFile").files[0];
+  const cat=$("imageCategory").value;
+  if(!f){msg("multiMsg","Choose an image first.","error");return;}
+  const fd=new FormData(); fd.append("file",f);
+  msg("multiMsg","Running multi-modal analysis…");
+  try{
+    const d=await api("/image-predict?category="+cat,{method:"POST",body:fd});
+    $("multiResults").innerHTML=`<div class="notice"><strong>Category:</strong> ${escapeHtml(d.category.toUpperCase())}<br><b>Reasoning:</b> ${escapeHtml(d.reasoning)}</div>`+d.results.map(r=>`<div class="modelresult"><div style="display:flex;justify-content:space-between"><b>${escapeHtml(r.label)}</b><span>${(r.score*100).toFixed(1)}%</span></div><div class="bar"><i style="width:${r.score*100}%"></i></div></div>`).join("");
+    msg("multiMsg","Analysis complete.","ok");
+    if($("saveMulti").checked){
+      await api("/records",{method:"POST",body:JSON.stringify({kind:"image_multimodal",title:cat.toUpperCase()+" Image Analysis",payload:d})});
+    }
+  }catch(e){msg("multiMsg",e.message,"error");}
+};
+
+async function refreshRecords(){
+  if(!token)return;
+  try{
+    const d=await api("/records");
+    if(!d.records.length){$("recordsList").innerHTML='<div class="empty">No saved records found.</div>';return;}
+    $("recordsList").innerHTML=d.records.map(r=>`<div class="record"><div><strong>${escapeHtml(r.title)}</strong><small>${escapeHtml(r.kind)} · ${new Date(r.created_at).toLocaleString()}</small></div><button class="danger" onclick="deleteRecord(${r.id})">Delete</button></div>`).join("");
+  }catch(e){msg("recordsMsg",e.message,"error");}
+}
+
+window.deleteRecord=async id=>{
+  if(!confirm("Delete record?"))return;
+  await api("/records/"+id,{method:"DELETE"});
+  await refreshRecords();
+};
+
 $("refreshRecords").onclick=refreshRecords;
-$("deleteAll").onclick=async()=>{const ok=confirm("Delete ALL saved records in your account? This cannot be undone. Choose Cancel if you want to keep them.");if(!ok)return;const typed=prompt('To confirm, type DELETE. Choose Cancel to keep your records.');if(typed!=="DELETE"){msg("recordsMsg","No records were deleted.","");return;}try{const d=await api("/records?confirm=DELETE",{method:"DELETE"});msg("recordsMsg",`${d.count} record(s) deleted at your request.`,"ok");await refreshRecords();}catch(e){msg("recordsMsg",e.message,"error");}};
-(async()=>{try{await loadSymptoms();if(token){try{const d=await api("/auth/me");user=d.user;showApp();await refreshRecords();}catch{token="";localStorage.removeItem("diagnova_token");showAuth();}}else showAuth();}catch(e){showAuth();msg("authMsg","API unavailable. Start the FastAPI server using the README instructions.","error");}})();
+
+(async()=>{
+  try{
+    await loadSymptoms();
+    if(token){try{const d=await api("/auth/me");user=d.user;showApp();await refreshRecords();}catch{token="";localStorage.removeItem("diagnova_token");showAuth();}}
+    else showAuth();
+  }catch{showAuth();}
+})();
 </script>
-</body></html>
+</body>
+</html>
