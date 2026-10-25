@@ -1,0 +1,10 @@
+fastapi>=0.115,<1.0
+uvicorn[standard]>=0.30,<1.0
+python-multipart>=0.0.9
+pydantic>=2.7,<3.0
+requests>=2.31
+Pillow>=10.0
+# Optional skin-model dependencies; install separately when ready:
+# torch>=2.2
+# torchvision>=0.17
+# huggingface_hub>=0.23
